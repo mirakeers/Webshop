@@ -1,0 +1,69 @@
+$(document).ready(init);
+
+function init() {
+    $(".colors li").click(changeColor);
+    $(".imagethumbnails a").click(showRightImage);
+    $(".counter a").click(setAmount);
+    $(".counter").each(counterCheck);
+}
+
+function changeColor(e) {
+    e.preventDefault();
+    
+    $(e.currentTarget.parentElement).find("li.current").removeClass("current");
+    $(e.currentTarget).addClass("current");
+    
+    var newColor = $(e.currentTarget).attr("title");
+    var currentFotoId;
+    
+    $("main .imagethumbnails > div").each(function(){
+        $(this).removeClass("visible");
+        if($(this).attr("data-color") == newColor){
+            $(this).addClass("visible");
+            currentFotoId = $($($(this)[0]).find("a.current img")[0]).attr("data-fotoId");
+        }
+    });
+    $("main .product-img img").each(function(){
+        $(this).removeClass("visible");
+        if($(this).attr("data-fotoId") == currentFotoId){
+            $(this).addClass("visible");
+        }
+    });
+}
+
+function showRightImage(e) {
+    e.preventDefault();
+
+    $(e.currentTarget.parentElement).find("a.current").removeClass("current");
+    $(e.currentTarget).addClass("current");
+    
+    var currentFotoId = $($(e.currentTarget).find("img")[0]).attr("data-fotoId");
+    $("main .product-img img").each(function(){
+        $(this).removeClass("visible");
+        if($(this).attr("data-fotoId") == currentFotoId){
+            $(this).addClass("visible");
+        }
+    });
+}
+
+function counterCheck() {
+    var n = $(this).find(".number").html();
+    if(n == 1) {
+        $(this).find(".less").css("opacity", 0.3);
+    } else if(n == 10) {
+        $(this).find(".more").css("opacity", 0.3);
+    }
+}
+function setAmount(e) {
+    e.preventDefault();
+    var n = parseInt($(e.target.parentElement).find(".number").html());
+    if ($(e.target).hasClass("less") && n > 1) {
+        $(e.target.parentElement).find("a").css("opacity", 1);
+        n -= 1;
+    } else if ($(e.target).hasClass("more") && n < 10) {
+        $(e.target.parentElement).find("a").css("opacity", 1);
+        n += 1;
+    }
+    $(e.target.parentElement).find(".number").html(n);
+    $(".counter").each(counterCheck);
+}

@@ -1,0 +1,72 @@
+<?php
+include_once 'Model/Product.php';
+include_once 'DAO/Verbinding/DatabaseFactory.php';
+
+class ProductDAO {
+
+    private static function getVerbinding() {
+        return DatabaseFactory::getDatabase();
+    }
+
+    public static function getProducten() {
+        $resultaat = self::getVerbinding()->voerSqlQueryUit("SELECT * FROM Product");
+        $resultatenArray = array();
+        for ($index = 0; $index < $resultaat->num_rows; $index++) {
+            $databaseRij = $resultaat->fetch_array();
+            $nieuw = self::converteerRijNaarObject($databaseRij);
+            $resultatenArray[$index] = $nieuw;
+        }
+        return $resultatenArray;
+    }
+    
+    public static function getProductenByProductCategorieIds($ids) {
+        $querystring = "SELECT * FROM Product WHERE productCategorieId IN (";
+        foreach($ids as $i => $id) {
+            if($i < count($ids) - 1){
+                $querystring .= "?,";
+            } else {
+                $querystring .= "?)";
+            }
+        }
+        $resultaat = self::getVerbinding()->voerSqlQueryUit($querystring, $ids);
+        $resultatenArray = array();
+        for ($index = 0; $index < $resultaat->num_rows; $index++) {
+            $databaseRij = $resultaat->fetch_array();
+            $nieuw = self::converteerRijNaarObject($databaseRij);
+            $resultatenArray[$index] = $nieuw;
+        }
+        return $resultatenArray;
+    }
+
+    public static function getProductById($id) {
+        $resultaat = self::getVerbinding()->voerSqlQueryUit("SELECT * FROM Product WHERE productId=?", array($id));
+        if ($resultaat->num_rows == 1) {
+            $databaseRij = $resultaat->fetch_array();
+            return self::converteerRijNaarObject($databaseRij);
+        } else {
+            //Er is waarschijnlijk iets mis gegaan
+            return false;
+        }
+    }
+
+    public static function insert($product) {
+        return self::getVerbinding()->voerSqlQueryUit("INSERT INTO Product(naam, beschrijving, prijsExclBtw, btwPercentage, productCategorieId) VALUES ('?','?','?','?','?')", array($product->getNaam(), $product->getBeschrijving(), $product->getPrijsExclBtw(), $product->getBtwPercentage(), $product->getProductCategorieId()));
+    }
+
+    public static function deleteById($id) {
+        return self::getVerbinding()->voerSqlQueryUit("DELETE FROM Product where productId=?", array($id));
+    }
+
+    public static function delete($product) {
+        return self::deleteById($product->getProductId());
+    }
+
+    public static function update($product) {
+        return self::getVerbinding()->voerSqlQueryUit("UPDATE Product SET naam='?', beschrijving='?', prijsExclBtw='?', btwPercentage='?', productCategorieId='?' WHERE productId=?", array($product->getNaam(), $product->getBeschrijving(), $product->getPrijsExclBtw(), $product->getBtwPercentage(), $product->getProductCategorieId(), $product->getProductId()));
+    }
+
+    protected static function converteerRijNaarObject($databaseRij) {
+        return new Product($databaseRij['productId'], $databaseRij['naam'], $databaseRij['beschrijving'], $databaseRij['prijsExclBtw'], $databaseRij['btwPercentage'], $databaseRij['productCategorieId']);
+    }
+
+}

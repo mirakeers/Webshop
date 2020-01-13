@@ -1,0 +1,21 @@
+$(document).ready(init);
+
+function init() {
+    $("#cart .overlay").click(showOrHideInfo);
+    $("#cart .dropdown .close").click(hideInfo);
+    $("#cart .dropdown .button").click(hideInfo);
+}
+
+function showOrHideInfo(e) {
+    e.preventDefault();
+    if($(e.currentTarget.parentElement).hasClass("dropdown-active")) {
+        $(e.currentTarget.parentElement).removeClass("dropdown-active");
+    } else {
+        $(e.currentTarget.parentElement).addClass("dropdown-active");
+    }
+}
+
+function hideInfo(e) {
+    if($(e.currentTarget).hasClass("close")){ e.preventDefault(); }
+    $(e.currentTarget.parentElement.parentElement).removeClass("dropdown-active");
+}

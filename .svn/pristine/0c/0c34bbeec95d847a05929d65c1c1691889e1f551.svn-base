@@ -1,0 +1,272 @@
+<?php
+    require_once './dao/ProductDAO.php';
+    require_once './dao/ProductCategorieDAO.php';
+    require_once './dao/ProductVariatieDAO.php';
+    require_once './dao/KleurDAO.php';
+    require_once './dao/FotoDAO.php';
+    require_once './model/Product.php';
+    require_once './model/ProductCategorie.php';
+    require_once './model/ProductVariatie.php';
+    require_once './model/Kleur.php';
+    require_once './model/Foto.php';
+    $toonFormulier = true;
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Salt och Peppar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/producttoevoegen.js"></script>
+</head>
+
+    
+<body class="admin">
+    <header>
+        <div>
+            <a id="toadmin" href=#>To webshop</a>
+            <h1 class="col-lg-8 col-lg-offset-2">Salt&amp;Peppar | admin zone</h1>
+            <a id="cart" href=winkelwagen.html><div class="amount">3</div></a>
+        </div>
+    </header>
+    <main>
+        <div class="container cf producttoevoegen">
+            
+        <?php
+        if (isFormulierIngediend()) {
+            if(isFormulierValid()) {
+                $toonFormulier = false;
+                
+                $naam = $_POST['naam'];
+                $beschrijving = $_POST['beschrijving'];
+                $prijsExclBtw = $_POST['prijsExclBtw'];
+                $btwPercentage = $_POST['btwPercentage'];
+                $productCategorieId = $_POST['productCategorieId'];
+                
+                //ProductDAO::insert(new Product(0, $naam, $beschrijving, $prijsExclBtw, $btwPercentage, $productCategorieId));
+                $productId = end(ProductDAO::getProducten())->getProductId();
+                
+                $kleurIds = $_POST['kleurIds'];
+                $aantalfotos = 0;
+                $kleurString = "";
+                
+                if (!is_dir('uploads')) {
+                    mkdir('uploads', 0777, true);
+                }
+                $t_dir = "uploads/";
+                $t_file = $t_dir . basename($_FILES["testFile"]["name"]);
+                move_uploaded_file($_FILES["testFile"]["tmp_name"], $t_file);
+                        
+                foreach ($kleurIds as $index => $kleurId) {
+                    $kleur = KleurDAO::getKleurById($kleurId);
+                    
+                    //ProductVariatieDAO::insert(new ProductVariatie(0, $productId, $kleurId));
+                    $variatieId = end(ProductVariatieDAO::getProductVariaties())->getProductVariatieId();
+                    
+                    $pathToFullFolder = 'img/products/' . $productId . '/' . $kleur->getNaam() . '/full';
+                    $pathToThumbsFolder = 'img/products/' . $productId . '/' . $kleur->getNaam() . '/thumbs';
+                    
+                    if (!is_dir($pathToFullFolder)) {
+                        mkdir($pathToFullFolder, 0777, true);
+                    }
+                    if (!is_dir($pathToThumbsFolder)) {
+                        mkdir($pathToThumbsFolder, 0777, true);
+                    }
+                    $fulls_target_dir = $pathToFullFolder . '/';
+                    $thumbs_target_dir = $pathToThumbsFolder . '/';
+                    
+                    $fotoLabelIds = $_POST['v' + ($index+1) + '-fotoLabelIds'];
+                    
+                    foreach($_FILES['v'. ($index + 1) .'-files'] as $index => $file)   {
+                        $thumb_target_file = $fulls_target_dir . basename($file['name']);
+                        move_uploaded_file($file["tmp_name"], $thumb_target_file);
+                        $full_target_file = $thumbs_target_dir . basename($file['name']);
+                        move_uploaded_file($file["tmp_name"], $full_target_file);
+                        
+                        //FotoDAO::insert(new Foto(0, $full_target_file, $thumb_target_file, $variatieId, $fotoLabelIds[$index], $index));
+                    }
+                    
+                    $aantalfotos += count($fotoFiles);             
+                    $kleurString .= ucwords(KleurDAO::getKleurById($kleurId)->getNaam());
+                    if($index < count($kleurIds) - 1) {
+                        $kleurString .= ", ";
+                    }
+                }
+            ?>
+                <div class="text-center">
+                    <h3>The product is added to the shop's database and is now available for sale.</h3>
+                    <p>A summary of the new product:</p>
+                    <table class="table text-left">
+                        <tr><th><strong>Name of the product:</strong></th><td><?php echo $naam?></td></tr>
+                        <tr><th><strong>Price, BTW exclusive:</strong></th><td>€<?php echo number_format($prijsExclBtw, 2)?></td></tr>
+                        <tr><th><strong>BTW Percentage:</strong></th><td><?php echo number_format($btwPercentage, 2)?></td></tr>
+                        <tr><th><strong>Category:</strong></th><td><?php echo ucwords(ProductCategorieDAO::getProductCategorieById($productCategorieId)->getNaam())?></td></tr>
+                        <tr><th><strong>Description:</strong></th><td><?php echo $beschrijving?></td></tr>
+                        <tr><th><strong>Colors:</strong></th><td><?php echo $kleurString?></td></tr>
+                        <tr><th><strong>Photos:</strong></th><td><?php echo $aantalfotos?> photos added</td></tr>
+                    </table>
+                    <a class="button inverted btn-mb" href=admin.php>&larr; Back to admin page</a>
+                </div>
+        <?php
+            }
+        }
+        ?>    
+        <?php
+        if ($toonFormulier) {
+        ?>
+            <div class="row">
+                <h2 class="text-center">Add new Product</h2>
+            </div>
+            
+            <form action="producttoevoegen.php" method="POST">
+                <div class="step visible" id="step1">
+                    <h3 class="text-center">Step 1: General information</h3>
+                    <input type="file" name="testFile" id="testFile">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="naam">Product name</label>
+                                    <input type="text" name="naam" id="naam" class="validation-notempty">
+                                    <div class="errorMessage">
+                                        <div class="staartje"></div>
+                                        <div class="message">Please insert a number.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="prijsExclBtw">Price (BTW exclusive)</label>
+                                    <input type="text" name="prijsExclBtw" id="prijsExclBtw"  class="validation-notempty validation-numeric">
+                                    <div class="errorMessage">
+                                        <div class="staartje"></div>
+                                        <div class="message">Please insert a number.</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="btwPercentage">BTW percentage (e.g. 0.21) </label>
+                                    <input type="text" name="btwPercentage" id="btwPercentage" class="validation-notempty validation-numeric validation-percentage">
+                                    <div class="errorMessage">
+                                        <div class="staartje"></div>
+                                        <div class="message">Please insert a number.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="productCategorieId">Product category</label>
+                                    <a href=# class="refresh"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh</a>
+                                    <select name="productCategorieId" id="productCategorieId">
+                                        <?php
+                                        $categories = ProductCategorieDAO::getProductCategorieen();
+                                        foreach ($categories as $categorie) {
+                                        ?>
+                                            <option value="<?php echo $categorie->getProductCategorieId()?>"><?php echo ucwords($categorie->getNaam())?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                    <a href=# class="button small pull-right">Add new category...</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="beschrijving">Description</label>
+                            <textarea name="beschrijving" id="beschrijving" rows="10" cols="50" class="validation-notempty"></textarea>
+                            <div class="errorMessage">
+                                <div class="staartje"></div>
+                                <div class="message">Please insert a number.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 3em;">
+                        <div class="col-lg-12 text-center">
+                            <a href=# class="button inverted discard">Discard</a>
+                            <a href=# class="button inverted nextstep disabled">Ready, to step 2</a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <div class="step" id="step2">
+                    <h3 class="text-center">Step 2: Color variations</h3>
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-3 variation">
+                            <h4>Which colors will this product be available in?</h4>
+                            <a href=# class="refresh"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh</a>
+                            <fieldset id="kleuren" class=" validation-1OrMoreSelected">
+                                <?php
+                                $kleuren = KleurDAO::getKleuren();
+                                foreach ($kleuren as $kleur) {
+                                ?>
+                                <label><input type="checkbox" name="kleurIds[]" value="<?php echo $kleur->getKleurId()?>"> <?php echo ucwords($kleur->getNaam())?></label>
+                                <?php
+                                }
+                                ?>
+                                
+                            </fieldset>
+                            <div class="errorMessage">
+                                <div class="staartje"></div>
+                                <div class="message">Please select at least 1 color variation.</div>
+                            </div>
+                            <a href=# class="button small pull-right">Add new color...</a>
+                        </div>
+                        <div class="col-lg-6 col-lg-offset-3" style="padding:0">
+                            
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 3em;">
+                        <div class="col-lg-12 text-center">
+                            <a href=# class="button inverted previousstep">Back</a>
+                            <a href=# class="button inverted discard">Discard</a>
+                            <a href=# class="button inverted nextstep disabled">Ready, to step 3</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="step" id="step3">
+                    <h3 class="text-center">Step 3: Add photos</h3>
+                    <div id="variationlist">
+                        <div class="row">
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 3em;">
+                        <div class="col-lg-12 text-center">
+                            <a href=# class="button inverted previousstep">Back</a>
+                            <a href=# class="button inverted discard">Discard</a>
+                            <input type="hidden" name="postcheck" value="true"/>
+                            <input type="submit" class="button inverted nextstep disabled" style="margin-left: 20px;" value="Ready, add product">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        <?php
+        }
+        ?>
+        </div>
+    </main>
+        
+
+</body>
+</html>
+<?php
+function isFormulierValid() {
+    return true;
+    /*global $voornaamErr, $achternaamErr, $leeftijdErr;
+    $allErr = $voornaamErr . $achternaamErr . $leeftijdErr;
+    if (empty($allErr)) {
+        //Formulier is valid
+        return true;
+    } else {
+        return false;
+    }*/
+}
+function isFormulierIngediend() {
+    return isset($_POST['postcheck']);
+}
+?>

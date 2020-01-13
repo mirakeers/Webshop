@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Salt och Peppar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/script.js"></script>
+</head>
+
+    
+<body>
+    <header>
+        <div>
+            <a id="toadmin" href=#>To admin zone</a>
+            <h1>Salt&amp;Peppar</h1>
+            <a id="cart" href=winkelwagen.html><div class="amount">3</div></a>
+        </div>
+    </header>
+    <main>
+        <div class="container cf">
+            <div>
+                <a class="button btn-mb" href=index.html>&larr; Back to overview</a>
+            </div>
+            <div class="imagethumbnails">
+                <a href=# class="current"><img src="img/products/1Shirt/white/thumbs/model.jpg"></a>
+                <a href=#><img src="img/products/1Shirt/white/thumbs/product.jpg"></a>
+            </div>
+            <div class="product-img">
+                <img src="img/products/1Shirt/white/full/model.jpg">
+            </div>
+            <div class="product-information">
+                <h2>Cardigan Divine Factory</h2>
+                <h3 class="price-big">€12.99</h3>
+                <h4 class="price-small">€10.74 excl. BTW</h4>
+                <p>Cupcake ipsum dolor sit. Amet marzipan cheesecake pie muffin tiramisu. Toffee oat cake jelly-o soufflé gingerbread topping ice cream dessert bonbon. Oat cake cake donut donut chocolate bar muffin biscuit. Apple pie brownie dragée jelly beans. Muffin tootsie roll liquorice cotton candy tiramisu. Gummies sweet roll dragée tiramisu apple pie powder sweet roll apple pie.</p>
+                <h5>Color</h5>
+                <ul class="colors">
+                    <li class="current c-white" title="white"><a href="#">White</a></li>
+                    <li class="c-kaki" title="kaki"><a href="#">Kaki</a></li>
+                    <li class="c-gray" title="gray"><a href="#">Gray</a></li>
+                </ul>
+                <h5>Amount</h5>
+                <div class="counter">
+                    <a class="less" href=#>-</a>
+                    <div class="number">3</div>
+                    <a class="more" href=#>+</a>
+                </div>
+                <a class="button" style="margin-top: 3em" href=#>Add To Cart</a>
+            </div>
+        </div>
+        
+    </main>
+        
+
+</body>
+</html>

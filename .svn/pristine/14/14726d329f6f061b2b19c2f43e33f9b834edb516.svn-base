@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Salt och Peppar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/script.js"></script>
+</head>
+
+    
+<body>
+    <header>
+        <div>
+            <h1>Salt&amp;Peppar <br><small>Admin Zone</small></h1>
+            <a id="cart" href=winkelwagen.html><div class="amount">3</div></a>
+        </div>
+    </header>
+    <main>
+        <div class="container cf">
+            <div>
+                <a class="button btn-mb" href=index.html style="margin-right: 1em">&larr; Back to webshop</a>
+                
+                <a class="button btn-mb" href=index.html>Add Item To Shop</a>
+            </div>
+            
+            <h2>Product Overview</h2>
+            <ul class="cf productlist">
+                <li>
+                    <h3>#0001: Hemd Easy Iron</h3>
+                    <div class="cf">
+                        <img src="img/products/2Hemd/pink/thumbs/model.jpg">
+                        
+                        <h4 class="price-small">€14.99</h4>
+                        <h4 class="price-small">€10.99 excl. BTW</h4>
+                        <h4>Available colors:</h4>
+                        <ul class="colors">
+                                <li class="current c-pink" title="pink"><a href="#">Pink</a></li>
+                                <li class="c-white" title="white"><a href="#">White</a></li>
+                        </ul>
+                    </div>
+                    <p class="description">Cupcake ipsum dolor sit. Amet marzipan cheesecake pie muffin tiramisu. Toffee oat cake jelly-o soufflé gingerbread topping ice cream dessert bonbon. Oat cake cake donut donut chocolate bar muffin biscuit.</p>
+                    <input class="button" type="button" value="Delete Item From Shop">
+                </li>
+                <li>
+                    <h3>#0002: Skinny Low Trashed Jeans</h3>
+                    <div class="cf">
+                        <img src="img/products/3Pants/blue/thumbs/model.jpg">
+                        
+                        <h4 class="price-small">€14.99</h4>
+                        <h4 class="price-small">€10.99 excl. BTW</h4>
+                        <h4>Available colors:</h4>
+                        <ul class="colors">
+                                <li class="current c-pink" title="pink"><a href="#">Pink</a></li>
+                                <li class="c-white" title="white"><a href="#">White</a></li>
+                        </ul>
+                    </div>
+                    <p class="description">Cupcake ipsum dolor sit. Amet marzipan cheesecake pie muffin tiramisu. Toffee oat cake jelly-o soufflé gingerbread topping ice cream dessert bonbon. Oat cake cake donut donut chocolate bar muffin biscuit. Apple pie brownie dragée jelly beans. Muffin tootsie roll liquorice cotton candy tiramisu. Gummies sweet roll dragée tiramisu apple pie powder sweet roll apple pie.</p>
+                    <input class="button" type="button" value="Delete Item From Shop">
+                </li>
+                <li>
+                    <h3>#0003: T-Shirt Divine Factory</h3>
+                    <div class="cf">
+                        <img src="img/products/1Shirt/kaki/thumbs/model.jpg">
+                        
+                        <h4 class="price-small">€14.99</h4>
+                        <h4 class="price-small">€10.99 excl. BTW</h4>
+                        <h4>Available colors:</h4>
+                        <ul class="colors">
+                                <li class="current c-pink" title="pink"><a href="#">Pink</a></li>
+                                <li class="c-white" title="white"><a href="#">White</a></li>
+                        </ul>
+                    </div>
+                    <p class="description">Cupcake ipsum dolor sit. Amet marzipan cheesecake pie muffin tiramisu. Toffee oat cake jelly-o soufflé gingerbread topping ice cream dessert bonbon. Oat cake cake donut donut chocolate bar muffin biscuit. Apple pie brownie dragée jelly beans. Muffin tootsie roll liquorice cotton candy tiramisu. Gummies sweet roll dragée tiramisu apple pie powder sweet roll apple pie.</p>
+                    <input class="button" type="button" value="Delete Item From Shop">
+                </li>
+                <li>
+                    <h3>#0004: Hemd Easy Iron</h3>
+                    <div class="cf">
+                        <img src="img/products/2Hemd/white/thumbs/model.jpg">
+                        
+                        <h4 class="price-small">€14.99</h4>
+                        <h4 class="price-small">€10.99 excl. BTW</h4>
+                        <h4>Available colors:</h4>
+                        <ul class="colors">
+                                <li class="c-pink" title="pink"><a href="#">Pink</a></li>
+                                <li class="current c-white" title="white"><a href="#">White</a></li>
+                        </ul>
+                    </div>
+                    <p class="description">Cupcake ipsum dolor sit. Amet marzipan cheesecake pie muffin tiramisu. Toffee oat cake jelly-o soufflé gingerbread topping ice cream dessert bonbon. Oat cake cake donut donut chocolate bar muffin biscuit. Apple pie brownie dragée jelly beans. Muffin tootsie roll liquorice cotton candy.</p>
+                    <input class="button" type="button" value="Delete Item From Shop">
+                </li>
+            </ul>
+            
+        </div>
+        
+    </main>
+        
+
+</body>
+</html>

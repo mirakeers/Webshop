@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Salt och Peppar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/detail.js"></script>
+</head>
+
+    
+<body class="admin">
+    <header>
+        <div>
+            <a id="toadmin" href=#>To webshop</a>
+            <h1 class="col-lg-8 col-lg-offset-2">Salt&amp;Peppar | admin zone</h1>
+            <a id="cart" href=winkelwagen.html><div class="amount">3</div></a>
+        </div>
+    </header>
+    <main>
+        <div class="container cf">
+            <h2 class="text-center">Add new Product</h2>
+            <h3 class="text-center">Step 3: Add photos</h3>
+            <form>
+                
+                <div class="row">
+                    <h4>Variation 1: Blue</h4>
+                    <div class="col-lg-12 variation">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label for="file">Picture 1</label>
+                                <input type="file" name="pic" accept="image/*">
+                                <label for="fotoLabelId">Label</label>
+                                <select id="fotoLabelId">
+                                    <option value="1">Model</option>
+                                    <option value="2">Product</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="file">Picture 2</label>
+                                <input type="file" name="pic" accept="image/*">
+                                <label for="fotoLabelId">Label</label>
+                                <select id="fotoLabelId">
+                                    <option value="2">Product</option>
+                                    <option value="1">Model</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3" style="padding-top: 2em">
+                                <a href=# class="button">+ Add picture</a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <h4>Variation 2: Red</h4>
+                    <div class="col-lg-12 variation">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label for="file">Picture 1</label>
+                                <input type="file" name="pic" accept="image/*">
+                                <label for="fotoLabelId">Label</label>
+                                <select id="fotoLabelId">
+                                    <option value="1">Model</option>
+                                    <option value="2">Product</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="file">Picture 2</label>
+                                <input type="file" name="pic" accept="image/*">
+                                <label for="fotoLabelId">Label</label>
+                                <select id="fotoLabelId">
+                                    <option value="2">Product</option>
+                                    <option value="1">Model</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3" style="padding-top: 2em">
+                                <a href=# class="button">+ Add picture</a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3em;">
+                    <div class="col-lg-12 text-center">
+                        <a href=# class="button inverted">Discard</a>
+                        <input type="submit" class="button inverted" style="margin-left: 20px;" value="Ready, add product">
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+    </main>
+        
+
+</body>
+</html>

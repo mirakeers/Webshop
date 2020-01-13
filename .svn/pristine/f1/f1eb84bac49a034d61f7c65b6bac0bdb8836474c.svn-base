@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Salt och Peppar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/detail.js"></script>
+</head>
+
+    
+<body class="admin">
+    <header>
+        <div>
+            <a id="toadmin" href=#>To webshop</a>
+            <h1 class="col-lg-8 col-lg-offset-2">Salt&amp;Peppar | admin zone</h1>
+            <a id="cart" href=winkelwagen.html><div class="amount">3</div></a>
+        </div>
+    </header>
+    <main>
+        <div class="container cf">
+            <h2 class="text-center">Add new Color</h2>
+            <form>
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3">
+                        <label for="naam">Color name</label>
+                        <input type="text" id="naam">
+                        <label for="naam">Pick a color</label>
+                        <input type="color" id="kleurcode" name="kleurcode" value="#FF0000">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 3em;">
+                    <div class="col-lg-12 text-center">
+                        <a href=# class="button inverted">Discard</a>
+                        <input type="submit" class="button inverted" style="margin-left: 20px;" value="Add color">
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+    </main>
+        
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of ProductVariatie
+ *
+ * @author Myra
+ */
+class ProductVariatie {
+    private $productVariatieId;
+    private $productId;
+    private $kleur;
+    private $fotos = array();
+    
+    function __construct($productVariatieId, $productId, $kleur, $fotos) {
+        $this->productVariatieId = $productVariatieId;
+        $this->productId = $productId;
+        $this->kleur = $kleur;
+        $this->fotos = $fotos;
+    }
+    function getProductVariatieId() {
+        return $this->productVariatieId;
+    }
+
+    function getProductId() {
+        return $this->productId;
+    }
+
+    function getKleur() {
+        return $this->kleur;
+    }
+
+    function getFotos() {
+        return $this->fotos;
+    }
+
+    function setProductVariatieId($productVariatieId) {
+        $this->productVariatieId = $productVariatieId;
+    }
+
+    function setProductId($productId) {
+        $this->productId = $productId;
+    }
+
+    function setKleur($kleur) {
+        $this->kleur = $kleur;
+    }
+
+    function setFotos($fotos) {
+        $this->fotos = $fotos;
+    }
+
+
+}

@@ -1,0 +1,96 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of Product
+ *
+ * @author Myra
+ */
+class Product {
+   private $productId;
+   private $naam;
+   private $beschrijving;
+   private $btwPercentage; //vb: 0.21
+   private $prijsExclBtw;
+   private $productCategorie;
+   private $productvariaties = array();
+   
+   
+   function getBtw() {
+       return $this->prijsExclBtw * $this->btwPercentage;
+   }
+   
+   function getPrijsInclBtw() {
+       return $this->getBtw() + $this->prijsExclBtw;
+   }
+   
+   function __construct($productId, $naam, $beschrijving, $btwPercentage, $prijsExclBtw, $productCategorie, $productvariaties) {
+       $this->productId = $productId;
+       $this->naam = $naam;
+       $this->beschrijving = $beschrijving;
+       $this->btwPercentage = $btwPercentage;
+       $this->prijsExclBtw = $prijsExclBtw;
+       $this->productCategorie = $productCategorie;
+       $this->productvariaties = $productvariaties;
+   }
+   function getProductId() {
+       return $this->productId;
+   }
+
+   function getNaam() {
+       return $this->naam;
+   }
+
+   function getBeschrijving() {
+       return $this->beschrijving;
+   }
+
+   function getBtwPercentage() {
+       return $this->btwPercentage;
+   }
+
+   function getPrijsExclBtw() {
+       return $this->prijsExclBtw;
+   }
+
+   function getProductCategorie() {
+       return $this->productCategorie;
+   }
+
+   function getProductvariaties() {
+       return $this->productvariaties;
+   }
+
+   function setProductId($productId) {
+       $this->productId = $productId;
+   }
+
+   function setNaam($naam) {
+       $this->naam = $naam;
+   }
+
+   function setBeschrijving($beschrijving) {
+       $this->beschrijving = $beschrijving;
+   }
+
+   function setBtwPercentage($btwPercentage) {
+       $this->btwPercentage = $btwPercentage;
+   }
+
+   function setPrijsExclBtw($prijsExclBtw) {
+       $this->prijsExclBtw = $prijsExclBtw;
+   }
+
+   function setProductCategorie($productCategorie) {
+       $this->productCategorie = $productCategorie;
+   }
+
+   function setProductvariaties($productvariaties) {
+       $this->productvariaties = $productvariaties;
+   }
+}

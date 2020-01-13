@@ -1,0 +1,138 @@
+<?php
+    require_once './dao/ProductDAO.php';
+?>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Salt och Peppar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/croppie.css" />
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/script.js"></script>
+</head>
+
+    
+<body>
+    <header>
+        <div>
+            <a id="toadmin" href=#>To admin zone</a>
+            <h1>Salt&amp;Peppar</h1>
+            <a id="cart" href=winkelwagen.html><div class="amount">3</div></a>
+        </div>
+        <img src="img/banner.jpg">
+    </header>
+    <main class="nocontainer">
+        <div class="sidebar">
+            <p>Hallo</p>
+        </div>
+        <div class="productsection">
+            <ul class="products cf">
+                <?php
+                    $products = ProductDAO::getProducten();
+                    foreach ($products as $index => $product) {
+                        $productvariaties = $product->getProductvariaties();
+                        /*$str = 
+                        '<li>
+                            <div class="imagebox">
+                                <img src="' . $productvariaties[0].getFotos[0].getLocatieFull() . '">
+                                <ul class="colors">';
+                        foreach($productvariaties as $index => $pv) {
+                            $str .= '<li class="';
+                            if($index == 0) {
+                                $str.= 'current ';
+                            }
+                            $str.= 'c-' . $pv.getKleur() . '" title="' . $pv.getKleur() . '"><a href="#">' . ucwords($pv.getKleur()) . '</a></li>';
+                        }
+                        $str .= 
+                                '</ul>
+                            </div>
+                            <h3>'. $product->getNaam() .'</h3>
+                            <h4 class="price-small">€'. $product->getPrijsInclBtw() . '</h4>
+                            <a class="button" href=detail.html>View Item</a>
+                        </li>';
+                        echo $str;*/
+                    }
+                ?>
+                <li>
+                    <div class="imagebox">
+                        <img src="img/products/2Hemd/pink/thumbs/model.jpg">
+                        <ul class="colors">
+                            <li class="current c-pink" title="pink"><a href="#">Pink</a></li>
+                            <li class="c-white" title="white"><a href="#">White</a></li>
+                        </ul>
+                    </div>
+                    <h3>Hemd Easy Iron</h3>
+                    <h4 class="price-small">€14.99</h4>
+                    <a class="button" href=detail.html>View Item</a>
+                </li>
+                <li>
+                    <div class="imagebox">
+                        <img src="img/products/3Pants/blue/thumbs/model.jpg">
+                        <ul class="colors">
+                            <li class="current c-blue" title="blue"><a href="#">Blue</a></li>
+                        </ul>
+                    </div>
+                    <h3>Skinny Low Trashed Jeans</h3>
+                    <h4 class="price-small">€29.99</h4>
+                    <a class="button" href=detail.html>View Item</a>
+                </li>
+                <li>
+                    <div class="imagebox">
+                        <img src="img/products/1Shirt/white/thumbs/model.jpg">
+                        <ul class="colors">
+                            <li class="current c-white" title="white"><a href="#">White</a></li>
+                            <li class="c-kaki" title="kaki"><a href="#">Kaki</a></li>
+                            <li class="c-gray" title="gray"><a href="#">Gray</a></li>
+                        </ul>
+                    </div>
+                    <h3>T-Shirt Divine Factory</h3>
+                    <h4 class="price-small">€4.99</h4>
+                    <a class="button" href="detail.html">View Item</a>
+                </li>
+                <li>
+                    <div class="imagebox">
+                        <img src="img/products/2Hemd/pink/thumbs/model.jpg">
+                        <ul class="colors">
+                            <li class="current c-pink" title="pink"><a href="#">Pink</a></li>
+                            <li class="c-white" title="white"><a href="#">White</a></li>
+                        </ul>
+                    </div>
+                    <h3>Hemd Easy Iron</h3>
+                    <h4 class="price-small">€14.99</h4>
+                    <a class="button" href=detail.html>View Item</a>
+                </li>
+                <li>
+                    <div class="imagebox">
+                        <img src="img/products/3Pants/blue/thumbs/model.jpg">
+                        <ul class="colors">
+                            <li class="current c-blue" title="blue"><a href="#">Blue</a></li>
+                        </ul>
+                    </div>
+                    <h3>Skinny Low Trashed Jeans</h3>
+                    <h4 class="price-small">€29.99</h4>
+                    <a class="button" href=detail.html>View Item</a>
+                </li>
+                <li>
+                    <div class="imagebox">
+                        <img src="img/products/1Shirt/white/thumbs/model.jpg">
+                        <ul class="colors">
+                            <li class="current c-white" title="white"><a href="#">White</a></li>
+                            <li class="c-kaki" title="kaki"><a href="#">Kaki</a></li>
+                            <li class="c-gray" title="gray"><a href="#">Gray</a></li>
+                        </ul>
+                    </div>
+                    <h3>T-Shirt Divine Factory</h3>
+                    <h4 class="price-small">€4.99</h4>
+                    <a class="button" href="detail.html">View Item</a>
+                </li>
+            </ul>
+        </div>
+    </main>
+        
+
+</body>
+</html>

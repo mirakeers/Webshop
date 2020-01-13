@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Salt och Peppar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/script.js"></script>
+</head>
+
+    
+<body>
+    <header>
+        <div>
+            <a id="toadmin" href=#>To admin zone</a>
+            <h1>Salt&amp;Peppar</h1>
+            <a id="cart" href=winkelwagen.html><div class="amount">3</div></a>
+        </div>
+    </header>
+    <main>
+        <div class="container cf">
+            <div>
+                <a class="button btn-mb" href=index.html>&larr; Back to overview</a>
+            </div>
+            <table class="cart">
+                <thead>
+                    <tr>
+                        <th>Product item</th>
+                        <th>Amount</th>
+                        <th>PPU</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <img src="img/products/1Shirt/kaki/full/product.jpg">
+                            <h3><a href="detail.html">Cardigan Divine Factory</a></h3>
+                            <div class="singlecolor c-kaki" title="kaki">Kaki</div>
+                            <input class="button" type="button" value="Delete Item">
+                        </td>
+                        <td>
+                            <div class="counter">
+                                <a class="less" href=#>-</a>
+                                <div class="number">3</div>
+                                <a class="more" href=#>+</a>
+                            </div>
+                        </td>
+                        <td>
+                            <h4 class="price-small ppu">€12.99</h4>
+                            <h5>€10.74 excl. BTW</h5>
+                        </td>
+                        <td>
+                            <h4 class="price-small">€12.99</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="img/products/2Hemd/pink/full/product.jpg">
+                            <h3><a href="detail.html">Cardigan Divine Factory</a></h3>
+                            <div class="singlecolor c-pink" title="pink">Pink</div>
+                            <input class="button" type="button" value="Delete Item">
+                        </td>
+                        <td>
+                            <div class="counter">
+                                <a class="less" href=#>-</a>
+                                <div class="number">1</div>
+                                <a class="more" href=#>+</a>
+                            </div>
+                        </td>
+                        <td>
+                            <h4 class="price-small">€<span class="ppu">12.99</span></h4>
+                            <h5>€<span class="ppu">10.74</span> excl. BTW</h5>
+                        </td>
+                        <td>
+                            <h4 class="price-small">€12.99</h4>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">
+                                <h4 class="price-small"><span class="amount">4</span> articles:</h4>
+                                <h4 class="price-small">BTW:</h4>
+                            <h4 class="price-small"><strong>Total amount:</strong></h4>
+                            </div>
+                        </td>
+                        <td colspan="1">
+                                <h4 class="price-small">€42.96</h4>
+                                <h4 class="price-small">€9.00</h4>
+                            <h4 class="price-small"><strong>€51.96</strong></h4>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <input class="button" type="button" value="To Payment &rarr;">
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+    </main>
+        
+
+</body>
+</html>

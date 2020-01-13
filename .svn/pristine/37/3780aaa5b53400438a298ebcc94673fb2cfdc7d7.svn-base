@@ -1,0 +1,46 @@
+<?php
+require_once './dao/ProductVariatieDAO.php';
+require_once './dao/ProductDAO.php';
+
+class WinkelwagenItem {
+    private $aantal;
+    private $productVariatieId;
+    
+    function __construct($aantal, $productVariatieId) {
+        $this->aantal = $aantal;
+        $this->productVariatieId = $productVariatieId;
+    }
+    
+    function getProductVariatie() {
+        return ProductVariatieDAO::getProductVariatieById($this->productVariatieId);
+    }
+    function getProduct() {
+        return ProductDAO::getProductById($this->getProductVariatie()->getProductId());
+    }
+    function getTotaalPrijsExclBtw() {
+        return $this->getProduct()->getPrijsExclBtw() * $this->aantal;
+    }
+    function getTotaalBtw() {
+        return $this->getProduct()->getBtw() * $this->aantal;
+    }
+    function getTotaalPrijsInclBtw() {
+        return $this->getTotaalPrijsExclBtw() + $this->getTotaalBtw();
+    }
+    function getAantal() {
+        return $this->aantal;
+    }
+
+    function getProductId() {
+        return $this->productVariatieId;
+    }
+
+    function setAantal($aantal) {
+        $this->aantal = $aantal;
+    }
+
+    function setProductId($productVariatieId) {
+        $this->productVariatieId = $productVariatieId;
+    }
+
+
+}

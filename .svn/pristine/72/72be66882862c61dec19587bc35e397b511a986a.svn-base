@@ -1,0 +1,119 @@
+<?php
+    require_once './dao/ProductDAO.php';
+    require_once './dao/ProductVariatieDAO.php';
+    require_once './dao/FotoDAO.php';
+    require_once './dao/KleurDAO.php';
+    require_once './dao/WinkelwagenDAO.php';
+    require_once './model/Product.php';
+    require_once './model/ProductVariatie.php';
+    require_once './model/Foto.php';
+    require_once './model/Kleur.php';
+    $productId = $_GET['productId'];
+    $product = ProductDAO::getProductById($productId);
+    $productvariaties = ProductVariatieDAO::getProductVariatiesByProductId($productId);
+
+    if (isFormulierIngediend()) {
+        WinkelwagenDAO::vermeerderAantalItems($_POST["productVariatieId"], $_POST["aantal"]);
+        header("Location:detail.php?productId=" . $productId);
+    }
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Salt och Peppar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/detail.js"></script>    
+    <script src="js/winkelwagenicon.js"></script>
+</head>
+
+    
+<body>
+    <header>
+        <?php
+        include './header.php'
+        ?>
+    </header>
+    <main>
+        <div class="container cf">
+            <div>
+                <a class="button btn-mb" href=index.php#productid<?php echo $productId?>>&larr; Back to overview</a>
+            </div>
+            <div class="imagethumbnails">
+                <?php
+                    foreach ($productvariaties  as $pvIndex => $productvariatie) {
+                        $kleur = KleurDAO::getKleurById($productvariatie->getKleurId());
+                ?>
+                        <div data-color="<?php echo $kleur->getNaam() ?>" <?php if($pvIndex == 0) {echo "class='visible'";}?>>
+                    <?php
+                        $fotos = FotoDAO::getFotosByProductVariatieId($productvariatie->getProductVariatieId());
+                        foreach ($fotos  as $fotoIndex => $foto) {
+                    ?>
+                            <a href=# <?php if($fotoIndex == 0) {echo "class='current'";}?>><img src="<?php echo $foto->getLocatieThumb()?>" data-fotoId="<?php echo $foto->getFotoId()?>"></a>
+                        <?php
+                        }
+                        ?>
+                        </div>
+                    <?php
+                    }
+                    ?>
+            </div>
+            <div class="product-img">
+                <?php
+                    foreach ($productvariaties  as $pvIndex => $productvariatie) {
+                        $kleur = KleurDAO::getKleurById($productvariatie->getKleurId());
+                        $fotos = FotoDAO::getFotosByProductVariatieId($productvariatie->getProductVariatieId());
+                        foreach ($fotos  as $fotoIndex => $foto) {
+                ?>
+                            <img src="<?php echo $foto->getLocatieFull()?>" <?php if($pvIndex == 0 && $fotoIndex == 0) {echo "class='visible'";}?> data-color="<?php echo $kleur->getNaam()?>" data-fotoId="<?php echo $foto->getFotoId()?>">
+                        <?php
+                        }
+                        ?>
+                    <?php
+                    }
+                    ?>
+            </div>
+            <div class="product-information">
+                <h2><?php echo $product->getNaam()?></h2>
+                <h3 class="price-big">€<?php echo number_format($product->getPrijsInclBtw(), 2)?></h3>
+                <h4 class="price-small">€<?php echo number_format($product->getPrijsExclBtw(), 2)?> excl. BTW</h4>
+                <p><?php echo $product->getBeschrijving()?></p>
+                <h5>Color</h5>
+                <ul class="colors">
+                    <?php
+                    foreach ($productvariaties  as $pvIndex => $productvariatie) {
+                        $kleur = KleurDAO::getKleurById($productvariatie->getKleurId());
+                    ?>
+                    <li <?php if($pvIndex == 0) {echo "class='current'";}?> title="<?php echo $kleur->getNaam();?>" data-productVariatieId="<?php echo $productvariatie->getProductVariatieId()?>"><a href="#" style="background-color: <?php echo $kleur->getKleurcode();?>"><?php echo ucwords($kleur->getNaam())?></a></li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+                <h5>Amount</h5>
+                <div class="counter">
+                    <a class="less" href=#>-</a>
+                    <div class="number">1</div>
+                    <a class="more" href=#>+</a>
+                </div>
+                <form id="addToCart" action="detail.php?productId=<?php echo $productId?>" method ="post">
+                        <input type="hidden" name="postcheck" value="true"/>
+                        <input type="hidden" id="productVariatieId" name="productVariatieId" value="<?php echo $productvariaties[0]->getProductVariatieId()?>"/>
+                        <input type="hidden" id="aantal" name="aantal" value="1"/>
+                        <input type=submit class="button" value="Add to cart">
+                </form>
+            </div>
+        </div>
+        
+    </main>
+        
+
+</body>
+</html>
+<?php
+    function isFormulierIngediend() {
+        return isset($_POST['postcheck']);
+    }
+?>

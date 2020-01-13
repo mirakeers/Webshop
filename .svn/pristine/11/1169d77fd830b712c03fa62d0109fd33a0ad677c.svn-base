@@ -1,0 +1,44 @@
+$(document).ready(init);
+
+function init() {
+    $(".imgcontainer").hover(showImageWithSecondPriority, showImageWithFirstPriority);
+    $(".colors li").click(changeColor);
+}
+
+function showImageWithFirstPriority(e) { //Generally, show the model image
+    var currentColor =  $(e.currentTarget).find("img.visible").attr("data-color");
+    var imgbox = $(e.currentTarget);
+    imgbox.find("img").each(function(){
+        $(this).removeClass("visible");
+        if($(this).attr("data-color") == currentColor && $(this).attr("data-priority") == 1){
+            $(this).addClass("visible");
+        }
+    });
+}
+
+function showImageWithSecondPriority(e) { //Generally, show the product image
+    var currentColor =  $(e.currentTarget).find("img.visible").attr("data-color");
+    var imgbox = $(e.currentTarget);
+    imgbox.find("img").each(function(){
+        $(this).removeClass("visible");
+        if($(this).attr("data-color") == currentColor && $(this).attr("data-priority") == 2){
+            $(this).addClass("visible");
+        }
+    });
+}
+
+function changeColor(e) {
+    e.preventDefault();
+    
+    $(e.currentTarget.parentElement).find("li.current").removeClass("current");
+    $(e.currentTarget).addClass("current");
+    
+    var newColor = $(e.currentTarget).attr("title");
+    var imgbox = $(e.currentTarget.parentElement.parentElement);
+    imgbox.find("img").each(function(){
+        $(this).removeClass("visible");
+        if($(this).attr("data-color") == newColor && $(this).attr("data-priority") == 1){
+            $(this).addClass("visible");
+        }
+    })
+}

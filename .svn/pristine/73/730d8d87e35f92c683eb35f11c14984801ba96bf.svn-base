@@ -1,0 +1,128 @@
+<?php
+    require_once './dao/ProductDAO.php';
+    require_once './dao/ProductVariatieDAO.php';
+    require_once './dao/FotoDAO.php';
+    require_once './dao/KleurDAO.php';
+    require_once './dao/WinkelwagenDAO.php';
+    require_once './dao/ProductCategorieDAO.php';
+    require_once './model/Product.php';
+    require_once './model/ProductVariatie.php';
+    require_once './model/Foto.php';
+    require_once './model/Kleur.php';
+?>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Salt och Peppar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/winkelwagenicon.js"></script>
+</head>
+
+    
+<body>
+    <header>
+        <div>
+            <a id="toadmin" href=admin.php>To admin zone</a>
+            <h1>Salt&amp;Peppar</h1>
+            <div id="cart">
+                <div class="dropdown">
+                    
+                    <?php include './winkelwagenpreview.php' ?>
+                    
+                    </div>
+                <div class="amount"><?php echo $aantalItems?></div>
+                <a href=winkelwagen.php class="overlay" title="<?php if($aantalItems >0) {echo $aantalItems . " items in cart";} else {echo "No items in shopping cart";}?>">Shopping cart</a>
+            </div>
+        </div>
+        <img src="img/banner.jpg">
+    </header>
+    <main class="nocontainer">
+        <div class="sidebar">
+            <h3>Edit Filters</h3>
+            
+            <form action="index.php" method ="get">
+                
+            <h4>Product categories</h4>
+                <?php
+                    $productCategories = ProductCategorieDAO::getProductCategorieen();
+                    foreach($productCategories as $productCategorie) {
+                ?>
+                    <label><input type="checkbox" name="productCategorieIds[]" value="<?php echo $productCategorie->getProductCategorieId()?>" 
+                        <?php if(!isFormulierIngediend() || in_array($productCategorie->getProductCategorieId(), $_GET['productCategorieIds'])) {echo "checked";}?>>
+                        <?php echo ucwords($productCategorie->getNaam())?></label>
+                <?php
+                    }
+                ?>
+                <input type="hidden" name="postcheck" value="true"/>
+                <input type="submit" class="button inverted" value="Apply filter">
+            </form>
+        </div>
+        <div class="productsection">
+            <ul class="products cf">
+                    <?php
+                    if(isFormulierIngediend()) {
+                        $products = ProductDAO::getProductenByProductCategorieIds($_GET['productCategorieIds']);
+                    } else {
+                        $products = ProductDAO::getProducten();
+                    }
+                    foreach ($products as $pIndex => $product) {
+                ?>
+                <li id="productid<?php echo $product->getProductId()?>">
+                    <div class="imagebox">
+                        <div class="imgcontainer">
+                            <?php
+                                $productvariaties = ProductVariatieDAO::getProductVariatiesByProductId($product->getProductId());
+                                foreach ($productvariaties as $pvIndex => $productvariatie) {
+                            ?>
+                            <?php   
+                                    $fotoPriorityOne = FotoDAO::getFotoByProductVariatieIdAndPrioriteit($productvariatie->getProductVariatieId(), 1);
+                                    $fotoPriorityTwo = FotoDAO::getFotoByProductVariatieIdAndPrioriteit($productvariatie->getProductVariatieId(), 2);
+                                    $kleurNaam = KleurDAO::getKleurById($productvariatie->getKleurId())->getNaam();
+                            ?>
+                            <img src="<?php echo $fotoPriorityOne->getLocatieThumb()?>" <?php if($pvIndex == 0) {echo "class='visible'";}?> data-priority="1" data-color="<?php echo $kleurNaam?>">
+                            <img src="<?php echo $fotoPriorityTwo->getLocatieThumb()?>" data-priority="2" data-color="<?php echo $kleurNaam?>">
+                            <?php 
+                                }
+                            ?>
+                        </div>
+                        <ul class="colors">
+                            <?php
+                                foreach ($productvariaties as $pvIndex => $productvariatie){
+                                    $kleur = KleurDAO::getKleurById($productvariatie->getKleurId());
+                            ?>
+                                    <li <?php if($pvIndex == 0) {echo "class='current'";}?> data-kleurId="<?php echo $kleur->getKleurId()?>" title="<?php echo $kleur->getNaam()?>"><a href="#" style="background-color: <?php echo $kleur->getKleurCode()?>"><?php echo ucwords($kleur->getNaam())?></a></li>
+                            <?php 
+                                } 
+                            ?>
+                        </ul>
+                    </div>
+                    <h3><?php echo $product->getNaam()?></h3>
+                    <h4 class="price-small">€<?php echo number_format($product->getPrijsInclBtw(), 2)?></h4>
+                    <form class="toDetails" action="detail.php" method ="get">
+                        <input type="hidden" id="productId" name="productId" value="<?php echo $product->getProductId()?>"/>
+                        <input type="hidden" id="kleurId" name="kleurId" value="<?php echo $productvariaties[0]->getKleurId()?>"/>
+                        <input type="submit" class="button" value="View item">
+                    </form>                    
+                </li>
+                <?php 
+                    }
+                ?>
+            </ul>
+        </div>
+    </main>      
+
+</body>
+</html>
+
+<?php
+    function isFormulierIngediend() {
+        return isset($_GET['postcheck']);
+    }
+?>
